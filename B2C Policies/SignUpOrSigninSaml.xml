@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0" TenantId="{Settings:Tenant}" PolicyId="{Settings:PolicyPrefix}signupsignin_saml" PublicPolicyUri="http://{Settings:Tenant}/{Settings:PolicyPrefix}signupsignin_saml" DeploymentMode="{Settings:DeploymentMode}" UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights">
+
+  <BasePolicy>
+    <TenantId>{Settings:Tenant}</TenantId>
+    <PolicyId>{Settings:PolicyPrefix}{Settings:ExtensionsPolicyName}</PolicyId>
+  </BasePolicy>
+
+  <ClaimsProviders>
+    <ClaimsProvider>
+      <DisplayName>SAML Issuer</DisplayName>
+      <TechnicalProfiles>
+        <!-- SAML Token Issuer technical profile -->
+        <TechnicalProfile Id="Saml2AssertionIssuer">
+          <DisplayName>Token Issuer</DisplayName>
+          <Protocol Name="None"/>
+          <OutputTokenFormat>SAML2</OutputTokenFormat>
+          <Metadata>
+            <Item Key="IssuerUri">{Settings:SamlIssuer}</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="MetadataSigning" StorageReferenceId="{Settings:SamlSigningCertificateKeyContainer}"/>
+            <Key Id="SamlAssertionSigning" StorageReferenceId="{Settings:SamlSigningCertificateKeyContainer}"/>
+            <Key Id="SamlMessageSigning" StorageReferenceId="{Settings:SamlSigningCertificateKeyContainer}"/>
+          </CryptographicKeys>
+          <InputClaims/>
+          <OutputClaims/>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Saml"/>
+        </TechnicalProfile>
+
+        <!-- Session management technical profile for SAML based tokens -->
+        <TechnicalProfile Id="SM-Saml">
+          <DisplayName>Session Management Provider</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.SSO.SamlSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+  </ClaimsProviders>
+
+  <UserJourneys>
+    <UserJourney Id="SignUpOrSignIn-ReadyDemo">
+      <OrchestrationSteps>
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="Saml2AssertionIssuer"/>
+      </OrchestrationSteps>
+    </UserJourney>
+  </UserJourneys>
+
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="SignUpOrSignIn-ReadyDemo" />
+    <UserJourneyBehaviors>
+      <SingleSignOn Scope="Tenant" KeepAliveInDays="7" />
+      <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="{Settings:AppInsightsInstrumentationKey}" DeveloperMode="{Settings:DeveloperMode}" ClientEnabled="true" ServerEnabled="true" TelemetryVersion="1.0.0" />
+    </UserJourneyBehaviors>
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="SAML2" />
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="displayName" />
+        <OutputClaim ClaimTypeReferenceId="givenName" />
+        <OutputClaim ClaimTypeReferenceId="surname" />
+        <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="objectId"/>
+        <OutputClaim ClaimTypeReferenceId="identityProvider" />
+        <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="objectId" ExcludeAsClaim="true"/>
+    </TechnicalProfile>
+  </RelyingParty>
+</TrustFrameworkPolicy>

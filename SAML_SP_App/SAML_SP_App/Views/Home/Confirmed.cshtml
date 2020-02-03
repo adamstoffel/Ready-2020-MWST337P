@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Waitlist Enrollment";
+}
+
+<img class="logo-image" src="@Url.Content("~/Content/contoso-logo-hero.png")" alt="Contoso Adventures" />
+<h1 class="mx-auto my-0 text-uppercase">Waitlist Confirmed</h1>
+<p class="mx-auto mt-2">Your account is setup and we have confirmed your spot on the Contoso Adventures waitlist. <a href="@Url.Action("Logout")">Click here</a> to sign out.</p>
+<p class="mx-auto mt-2 mb-5">
+    We have you on the list as: <br />
+    @ViewBag.UserName <br />
+    @ViewBag.UserEmail
+</p>
