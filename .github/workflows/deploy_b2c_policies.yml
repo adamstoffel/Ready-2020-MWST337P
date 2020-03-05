@@ -40,7 +40,7 @@ jobs:
         tokenSuffix: "}"
         files: "B2C Policies/*.xml"
     - name: Upload Facebook Client Secret
-      uses: azure-ad-b2c/deploy-trustframework-keyset-secret@master
+      uses: azure-ad-b2c/deploy-trustframework-keyset-secret@v1
       with:
         name: ${{ env.FacebookClientSecretKeyContainer }}
         value: ${{ secrets.FacebookClientSecret }}
@@ -48,7 +48,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload SendGrid API Key
-      uses: azure-ad-b2c/deploy-trustframework-keyset-secret@master
+      uses: azure-ad-b2c/deploy-trustframework-keyset-secret@v1
       with:
         name: ${{ env.SendGridApiKeySecretContainer }}
         value: ${{ secrets.SendGridApiKey }}
@@ -58,7 +58,7 @@ jobs:
     - name: Generate SAML Signing Certificate
       run: powershell -command "New-SelfSignedCertificate -Subject cn=${{ env.Tenant }} -KeySpec Signature -KeyExportPolicy Exportable -KeyAlgorithm RSA -KeyLength 2048 -CertStoreLocation Cert:\CurrentUser\My | Export-PfxCertificate -FilePath samlcert.pfx -Password (ConvertTo-SecureString -String '${{ secrets.PfxPassword }}' -Force -AsPlainText)"
     - name: Upload SAML Certificate Keyset
-      uses: ./.github/actions/deploy-trustframework-keyset-cert
+      uses: azure-ad-b2c/deploy-trustframework-keyset-certificate@master
       with:
         name: ${{ env.SamlSigningCertificateKeyContainer }}
         file: samlcert.pfx
