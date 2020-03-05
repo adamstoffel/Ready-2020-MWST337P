@@ -1,22 +1,22 @@
 on:
   push:
     branches:
-      - master
+      - testadamdeploy
 
 env:
-  B2CServicePrincipalClientId: ffbf7404-4331-4543-b2fe-070905137465
-  Name: MSReady2020MWST337P
+  B2CServicePrincipalClientId: ee7e5f64-2e51-45a3-b4df-54892346c45f
+  Name: adamtestadb2c
   Production: false
-  Tenant: MSReady2020MWST337P.onmicrosoft.com
-  PolicyPrefix: B2C_1A_ReadyWinter2020_
+  Tenant: adamtestadb2c.onmicrosoft.com
+  PolicyPrefix: B2C_1A_DEPLOYTEST_
   BasePolicyName: TrustFrameworkBase
   ExtensionsPolicyName: TrustFrameworkExtensions
   DeploymentMode: Development
   DeveloperMode: true
   RestDebugMode: True
   AppInsightsInstrumentationKey: 666351ec-57b2-410d-b1a9-de2dc94da60d
-  IdentityExperienceFrameworkAppId: 6f5331e0-239a-407a-9382-6b2c7bbed500
-  ProxyIdentityExperienceFrameworkAppId: 277c8a24-9cb0-45af-974d-d446dd186c29
+  IdentityExperienceFrameworkAppId: 3e39f6e9-08c6-4864-9723-36e6c6d740ef
+  ProxyIdentityExperienceFrameworkAppId: fac6e45c-c1db-4cd8-82fe-c8c8800c512e
   FacebookClientId: 828534884165356
   FacebookClientSecretKeyContainer: B2C_1A_FacebookSecret
   SendGridSendEmailEndpoint: https://api.sendgrid.com/v3/mail/send
@@ -24,7 +24,7 @@ env:
   SendGridEmailVerifyTemplateId: d-64b5dc7bf870411687c90ddd1498ce82
   SendGridApiKeySecretContainer: B2C_1A_SendGridApiKey
   SamlSigningCertificateKeyContainer: B2C_1A_SamlIdpCertificate
-  SamlIssuer: https://msready2020mwst337p.b2clogin.com/MSReady2020MWST337P.onmicrosoft.com/B2C_1A_ReadyWinter2020_signupsignin_saml
+  SamlIssuer: https://adamtestadb2c.b2clogin.com/adamtestadb2c.onmicrosoft.com/B2C_1A_DEPLOYTEST_signupsignin_saml
 
 jobs:
   build-and-deploy:
@@ -67,7 +67,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload TrustFrameworkBase Policy
-      uses: ./.github/actions/deploy-trustframework-policy
+      uses: adamstoffel/deploy-trustframework-policy@master
       with:
         file: "B2C Policies/TrustFrameworkBase.xml"
         policy: ${{ env.PolicyPrefix }}${{ env.BasePolicyName }}
@@ -75,7 +75,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload TrustFrameworkExtensions Policy
-      uses: ./.github/actions/deploy-trustframework-policy
+      uses: adamstoffel/deploy-trustframework-policy@master
       with:
         file: "B2C Policies/TrustFrameworkExtensions.xml"
         policy: ${{ env.PolicyPrefix }}${{ env.ExtensionsPolicyName }}
@@ -83,7 +83,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload SignUpOrSignin Policy
-      uses: ./.github/actions/deploy-trustframework-policy
+      uses: adamstoffel/deploy-trustframework-policy@master
       with:
         file: "B2C Policies/SignUpOrSignin.xml"
         policy: ${{ env.PolicyPrefix }}signupsignin
@@ -91,7 +91,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload SignUpOrSigninSaml Policy
-      uses: ./.github/actions/deploy-trustframework-policy
+      uses: adamstoffel/deploy-trustframework-policy@master
       with:
         file: "B2C Policies/SignUpOrSigninSaml.xml"
         policy: ${{ env.PolicyPrefix }}signupsignin_saml
