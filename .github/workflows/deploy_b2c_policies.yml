@@ -58,7 +58,7 @@ jobs:
     - name: Generate SAML Signing Certificate
       run: powershell -command "New-SelfSignedCertificate -Subject cn=${{ env.Tenant }} -KeySpec Signature -KeyExportPolicy Exportable -KeyAlgorithm RSA -KeyLength 2048 -CertStoreLocation Cert:\CurrentUser\My | Export-PfxCertificate -FilePath samlcert.pfx -Password (ConvertTo-SecureString -String '${{ secrets.PfxPassword }}' -Force -AsPlainText)"
     - name: Upload SAML Certificate Keyset
-      uses: azure-ad-b2c/deploy-trustframework-keyset-certificate@master
+      uses: azure-ad-b2c/deploy-trustframework-keyset-certificate@v1
       with:
         name: ${{ env.SamlSigningCertificateKeyContainer }}
         file: samlcert.pfx
