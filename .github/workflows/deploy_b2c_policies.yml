@@ -98,3 +98,4 @@ jobs:
         tenant: ${{ env.Tenant }}
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
+
