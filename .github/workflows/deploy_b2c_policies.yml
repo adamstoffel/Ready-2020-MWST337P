@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - testadamdeploy
+      - master
 
 env:
   B2CServicePrincipalClientId: ee7e5f64-2e51-45a3-b4df-54892346c45f
