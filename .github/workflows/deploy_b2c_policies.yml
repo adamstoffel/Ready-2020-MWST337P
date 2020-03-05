@@ -40,7 +40,7 @@ jobs:
         tokenSuffix: "}"
         files: "B2C Policies/*.xml"
     - name: Upload Facebook Client Secret
-      uses: ./.github/actions/deploy-trustframework-keyset-secret
+      uses: azure-ad-b2c/deploy-trustframework-keyset-secret@master
       with:
         name: ${{ env.FacebookClientSecretKeyContainer }}
         value: ${{ secrets.FacebookClientSecret }}
@@ -48,7 +48,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload SendGrid API Key
-      uses: ./.github/actions/deploy-trustframework-keyset-secret
+      uses: azure-ad-b2c/deploy-trustframework-keyset-secret@master
       with:
         name: ${{ env.SendGridApiKeySecretContainer }}
         value: ${{ secrets.SendGridApiKey }}
@@ -67,7 +67,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload TrustFrameworkBase Policy
-      uses: adamstoffel/deploy-trustframework-policy@master
+      uses: azure-ad-b2c/deploy-trustframework-policy@v1
       with:
         file: "B2C Policies/TrustFrameworkBase.xml"
         policy: ${{ env.PolicyPrefix }}${{ env.BasePolicyName }}
@@ -75,7 +75,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload TrustFrameworkExtensions Policy
-      uses: adamstoffel/deploy-trustframework-policy@master
+      uses: azure-ad-b2c/deploy-trustframework-policy@v1
       with:
         file: "B2C Policies/TrustFrameworkExtensions.xml"
         policy: ${{ env.PolicyPrefix }}${{ env.ExtensionsPolicyName }}
@@ -83,7 +83,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload SignUpOrSignin Policy
-      uses: adamstoffel/deploy-trustframework-policy@master
+      uses: azure-ad-b2c/deploy-trustframework-policy@v1
       with:
         file: "B2C Policies/SignUpOrSignin.xml"
         policy: ${{ env.PolicyPrefix }}signupsignin
@@ -91,7 +91,7 @@ jobs:
         clientId: ${{ env.B2CServicePrincipalClientId }}
         clientSecret: ${{ secrets.B2CServicePrincipalClientSecret }}
     - name: Upload SignUpOrSigninSaml Policy
-      uses: adamstoffel/deploy-trustframework-policy@master
+      uses: azure-ad-b2c/deploy-trustframework-policy@v1
       with:
         file: "B2C Policies/SignUpOrSigninSaml.xml"
         policy: ${{ env.PolicyPrefix }}signupsignin_saml
