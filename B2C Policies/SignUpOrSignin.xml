@@ -9,10 +9,21 @@
   </BasePolicy>
 
   <ClaimsProviders>
-    <TechnicalProfile Id="JwtIssuer">
-      <DisplayName>JWT token Issuer</DisplayName>
+    <TechnicalProfile Id="JwtIssuer-WithSession">
+      <DisplayName>JWT Issuer</DisplayName>
       <Protocol Name="OpenIdConnect" />
       <OutputTokenFormat>JWT</OutputTokenFormat>
+      <Metadata>
+        <Item Key="client_id">{service:te}</Item>
+        <Item Key="issuer_refresh_token_user_identity_claim_type">objectId</Item>
+        <Item Key="SendTokenResponseBodyWithJsonNumbers">true</Item>
+      </Metadata>
+      <CryptographicKeys>
+        <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+        <Key Id="issuer_refresh_token_key" StorageReferenceId="B2C_1A_TokenEncryptionKeyContainer" />
+      </CryptographicKeys>
+      <InputClaims />
+      <OutputClaims />
       <UseTechnicalProfileForSessionManagement ReferenceId="SM-OAuth-Issuer" />
     </TechnicalProfile>
 
@@ -25,7 +36,7 @@
   <UserJourneys>
     <UserJourney Id="SignUpOrSignIn-ReadyDemo">
       <OrchestrationSteps>
-        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer-WithSession" />
       </OrchestrationSteps>
     </UserJourney>
   </UserJourneys>
