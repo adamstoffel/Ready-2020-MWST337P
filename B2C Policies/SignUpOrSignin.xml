@@ -1,12 +1,34 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0" TenantId="{Settings:Tenant}" PolicyId="{Settings:PolicyPrefix}signupsignin" PublicPolicyUri="http://{Settings:Tenant}/{Settings:PolicyPrefix}signupsignin" DeploymentMode="{Settings:DeploymentMode}" UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights">
 
   <BasePolicy>
     <TenantId>{Settings:Tenant}</TenantId>
     <PolicyId>{Settings:PolicyPrefix}{Settings:ExtensionsPolicyName}</PolicyId>
   </BasePolicy>
+
+  <ClaimsProviders>
+    <TechnicalProfile Id="JwtIssuer">
+      <DisplayName>JWT token Issuer</DisplayName>
+      <Protocol Name="OpenIdConnect" />
+      <OutputTokenFormat>JWT</OutputTokenFormat>
+      <UseTechnicalProfileForSessionManagement ReferenceId="SM-OAuth-Issuer" />
+    </TechnicalProfile>
+
+    <TechnicalProfile Id="SM-OAuth-Issuer">
+      <DisplayName>Session Management Provider</DisplayName>
+      <Protocol Name="Proprietary" Handler="Web.TPEngine.SSO.OAuthSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    </TechnicalProfile>
+  </ClaimsProviders>
+
+  <UserJourneys>
+    <UserJourney Id="SignUpOrSignIn-ReadyDemo">
+      <OrchestrationSteps>
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+      </OrchestrationSteps>
+    </UserJourney>
+  </UserJourneys>
 
   <RelyingParty>
     <DefaultUserJourney ReferenceId="SignUpOrSignIn-ReadyDemo" />
