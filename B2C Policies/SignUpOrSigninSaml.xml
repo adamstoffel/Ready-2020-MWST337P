@@ -12,7 +12,6 @@
     <ClaimsProvider>
       <DisplayName>SAML Issuer</DisplayName>
       <TechnicalProfiles>
-        <!-- SAML Token Issuer technical profile -->
         <TechnicalProfile Id="Saml2AssertionIssuer">
           <DisplayName>Token Issuer</DisplayName>
           <Protocol Name="None"/>
@@ -30,7 +29,6 @@
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Saml"/>
         </TechnicalProfile>
 
-        <!-- Session management technical profile for SAML based tokens -->
         <TechnicalProfile Id="SM-Saml">
           <DisplayName>Session Management Provider</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.SSO.SamlSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
