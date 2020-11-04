@@ -14,7 +14,7 @@
       <TechnicalProfiles>
         <TechnicalProfile Id="Saml2AssertionIssuer">
           <DisplayName>Token Issuer</DisplayName>
-          <Protocol Name="None"/>
+          <Protocol Name="SAML2" />
           <OutputTokenFormat>SAML2</OutputTokenFormat>
           <Metadata>
             <Item Key="IssuerUri">{Settings:SamlIssuer}</Item>
@@ -26,10 +26,10 @@
           </CryptographicKeys>
           <InputClaims/>
           <OutputClaims/>
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Saml"/>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Saml-Issuer"/>
         </TechnicalProfile>
 
-        <TechnicalProfile Id="SM-Saml">
+        <TechnicalProfile Id="SM-Saml-Issuer">
           <DisplayName>Session Management Provider</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.SSO.SamlSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
         </TechnicalProfile>
