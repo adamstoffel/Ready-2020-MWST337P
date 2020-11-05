@@ -54,6 +54,7 @@ namespace SAML_SP_App.App_Start
 
             var idp = new IdentityProvider(new EntityId(IdpEntityId), spOptions)
             {
+                AllowUnsolicitedAuthnResponse = true,
                 MetadataLocation = IdpMetadataUrl
             };
             idp.LoadMetadata = true;
