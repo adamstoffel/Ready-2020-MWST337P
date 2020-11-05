@@ -26,7 +26,9 @@ namespace SAML_SP_App.Controllers
         [SamlAuthorize]
         public ActionResult Logout()
         {
-            HttpContext.GetOwinContext().Authentication.SignOut();
+            if  (User?.Identity?.IsAuthenticated == true) {
+                HttpContext.GetOwinContext().Authentication.SignOut();
+            }
             return Redirect("Index");
         }
     }
