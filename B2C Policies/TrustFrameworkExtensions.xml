@@ -274,7 +274,7 @@
       <TechnicalProfiles>
 
         <!-- REPLACEMENT LOCAL ACCOUNT SIGN-UP TECHNICAL PROFILE USING DISPLAY CONTROL FOR EMAIL -->
-        <TechnicalProfile Id="LocalAccountSignUpWithLogonEmail-ReadyDemo">
+        <TechnicalProfile Id="LocalAccountSignUpWithLogonEmail-Demo">
           <DisplayName>Email signup</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
           <Metadata>
@@ -311,7 +311,7 @@
   </ClaimsProviders>
 
   <UserJourneys>
-    <UserJourney Id="SignUpOrSignIn-ReadyDemo">
+    <UserJourney Id="SignUpOrSignIn-Demo">
       <OrchestrationSteps>
 
         <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
@@ -334,7 +334,7 @@
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="FacebookExchange" TechnicalProfileReferenceId="Facebook-OAUTH" />
-            <ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail-ReadyDemo" />
+            <ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail-Demo" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
