@@ -8,37 +8,8 @@
     <PolicyId>{Settings:PolicyPrefix}{Settings:ExtensionsPolicyName}</PolicyId>
   </BasePolicy>
 
-  <ClaimsProviders>
-    <ClaimsProvider>
-      <DisplayName>SAML Issuer</DisplayName>
-      <TechnicalProfiles>
-        <TechnicalProfile Id="Saml2AssertionIssuer">
-          <DisplayName>Token Issuer</DisplayName>
-          <Protocol Name="SAML2" />
-          <OutputTokenFormat>SAML2</OutputTokenFormat>
-          <Metadata>
-            <Item Key="IssuerUri">{Settings:SamlIssuer}</Item>
-          </Metadata>
-          <CryptographicKeys>
-            <Key Id="MetadataSigning" StorageReferenceId="{Settings:SamlSigningCertificateKeyContainer}"/>
-            <Key Id="SamlAssertionSigning" StorageReferenceId="{Settings:SamlSigningCertificateKeyContainer}"/>
-            <Key Id="SamlMessageSigning" StorageReferenceId="{Settings:SamlSigningCertificateKeyContainer}"/>
-          </CryptographicKeys>
-          <InputClaims/>
-          <OutputClaims/>
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Saml-Issuer"/>
-        </TechnicalProfile>
-
-        <TechnicalProfile Id="SM-Saml-Issuer">
-          <DisplayName>Session Management Provider</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.SSO.SamlSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-        </TechnicalProfile>
-      </TechnicalProfiles>
-    </ClaimsProvider>
-  </ClaimsProviders>
-
   <UserJourneys>
-    <UserJourney Id="SignUpOrSignIn-ReadyDemo">
+    <UserJourney Id="SignUpOrSignIn-Demo">
       <OrchestrationSteps>
         <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="Saml2AssertionIssuer"/>
       </OrchestrationSteps>
@@ -46,7 +17,7 @@
   </UserJourneys>
 
   <RelyingParty>
-    <DefaultUserJourney ReferenceId="SignUpOrSignIn-ReadyDemo" />
+    <DefaultUserJourney ReferenceId="SignUpOrSignIn-Demo" />
     <UserJourneyBehaviors>
       <SingleSignOn Scope="Tenant" KeepAliveInDays="7" />
       <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="{Settings:AppInsightsInstrumentationKey}" DeveloperMode="{Settings:DeveloperMode}" ClientEnabled="true" ServerEnabled="true" TelemetryVersion="1.0.0" />

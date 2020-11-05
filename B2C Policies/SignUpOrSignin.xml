@@ -8,38 +8,8 @@
     <PolicyId>{Settings:PolicyPrefix}{Settings:ExtensionsPolicyName}</PolicyId>
   </BasePolicy>
 
-  <ClaimsProviders>
-    <ClaimsProvider>
-      <DisplayName>OIDC Issuer</DisplayName>
-      <TechnicalProfiles>
-        <TechnicalProfile Id="JwtIssuer-WithSession">
-          <DisplayName>JWT Issuer</DisplayName>
-          <Protocol Name="OpenIdConnect" />
-          <OutputTokenFormat>JWT</OutputTokenFormat>
-          <Metadata>
-            <Item Key="client_id">{service:te}</Item>
-            <Item Key="issuer_refresh_token_user_identity_claim_type">objectId</Item>
-            <Item Key="SendTokenResponseBodyWithJsonNumbers">true</Item>
-          </Metadata>
-          <CryptographicKeys>
-            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
-            <Key Id="issuer_refresh_token_key" StorageReferenceId="B2C_1A_TokenEncryptionKeyContainer" />
-          </CryptographicKeys>
-          <InputClaims />
-          <OutputClaims />
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-OAuth-Issuer" />
-        </TechnicalProfile>
-
-        <TechnicalProfile Id="SM-OAuth-Issuer">
-          <DisplayName>Session Management Provider</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.SSO.OAuthSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-        </TechnicalProfile>
-      </TechnicalProfiles>
-    </ClaimsProvider>
-  </ClaimsProviders>
-
   <UserJourneys>
-    <UserJourney Id="SignUpOrSignIn-ReadyDemo">
+    <UserJourney Id="SignUpOrSignIn-Demo">
       <OrchestrationSteps>
         <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer-WithSession" />
       </OrchestrationSteps>
@@ -47,7 +17,7 @@
   </UserJourneys>
 
   <RelyingParty>
-    <DefaultUserJourney ReferenceId="SignUpOrSignIn-ReadyDemo" />
+    <DefaultUserJourney ReferenceId="SignUpOrSignIn-Demo" />
     <UserJourneyBehaviors>
       <SingleSignOn Scope="Tenant" KeepAliveInDays="7" />
       <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="{Settings:AppInsightsInstrumentationKey}" DeveloperMode="{Settings:DeveloperMode}" ClientEnabled="true" ServerEnabled="true" TelemetryVersion="1.0.0" />
