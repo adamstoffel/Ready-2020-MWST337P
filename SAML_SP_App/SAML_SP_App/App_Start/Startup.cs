@@ -39,7 +39,8 @@ namespace SAML_SP_App.App_Start
             app.SetDefaultSignInAsAuthenticationType("SamlCookie");
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = "SamlCookie"
+                AuthenticationType = "SamlCookie",
+                CookieSameSite = SameSiteMode.None
             });
             app.UseSaml2Authentication(GetSaml2AuthenticationOptions());
         }
