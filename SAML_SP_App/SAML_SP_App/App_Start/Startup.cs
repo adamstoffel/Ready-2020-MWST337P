@@ -61,6 +61,12 @@ namespace SAML_SP_App.App_Start
 
             saml2Options.IdentityProviders.Add(idp);
 
+            saml2Options.Notifications.ProcessSingleLogoutResponseStatus = (response, state) =>
+            {
+                // "Requestor" error usually means the user is already signed out; send true to indicate it is handled
+                return response.Status == Sustainsys.Saml2.Saml2P.Saml2StatusCode.Requester; 
+            };
+
             return saml2Options;
         }
 
@@ -77,7 +83,8 @@ namespace SAML_SP_App.App_Start
                 ReturnUrl = new Uri(SiteBaseUrl + "/Confirmed"),
                 DiscoveryServiceUrl = new Uri(SiteBaseUrl + "/DiscoveryService"),
                 Organization = organization,
-                MinIncomingSigningAlgorithm = "http://www.w3.org/2000/09/xmldsig#rsa-sha1"
+                MinIncomingSigningAlgorithm = "http://www.w3.org/2000/09/xmldsig#rsa-sha1",
+                AuthenticateRequestSigningBehavior = SigningBehavior.Always
             };
 
             using (var certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser))
